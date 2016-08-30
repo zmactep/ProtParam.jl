@@ -7,6 +7,7 @@ import Bio.Seq: AminoAcidSequence, composition,
                 AA_M, AA_N, AA_P, AA_Q, AA_R,
                 AA_S, AA_T, AA_V, AA_W, AA_Y,
                 @aa_str
+import Bio.Windows: eachwindow
 
 export Atom,
        ATOM_C, ATOM_H, ATOM_O, ATOM_N, ATOM_S,
@@ -25,6 +26,7 @@ include("atom.jl")
 include("proteinparam.jl")
 include("moleculeparam.jl")
 include("acidparam.jl")
+include("dipeptideparam.jl")
 include("functions.jl")
 
 """

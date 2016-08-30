@@ -26,8 +26,8 @@ function half_life(protein::AminoAcidSequence, make_string::Bool=true)
 end
 
 "The instability index (II) of protein"
-function instability_index(proteint::AminoAcidSequence)
-    0
+function instability_index(protein::AminoAcidSequence)
+    10.0/length(protein)*sum([DIWV(b, c) for (_, (b, c)) in eachwindow(protein, 2)])
 end
 
 "Stability class by II"
