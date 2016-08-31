@@ -39,20 +39,37 @@ end
 function isoelectric_point(protein::AminoAcidSequence, epsilon = 0.01)
     #these are constant pKa values
     pKa = Dict(
-        AA_K => 10, 
-        AA_R => 12, 
-        AA_H => 6.5, 
-        AA_D => 4.4, 
-        AA_E => 4.4, 
-        AA_C => 8.5, 
-        AA_Y => 10.0
+      AA_K => 10, 
+      AA_R => 12, 
+      AA_H => 5.98, 
+      AA_D => 4.05, 
+      AA_E => 4.45, 
+      AA_C => 9, 
+      AA_Y => 10.0
     )
-    Nterm = 8.0
-    Cterm = 3.1
+    Nterm = get(Dict(
+          AA_A => 7.59, 
+          AA_M => 7.0,
+          AA_S => 6.93,
+          AA_P => 8.36,
+          AA_T => 6.82,
+          AA_V => 7.44,
+          AA_Q => 7.70
+          ), first(protein), 7.5)
+    Cterm = 3.55
     #"the calling function"
     charged_counts = [a => count(x -> x==a, protein) for a in aa"KRHDECY"]
+    last_aa = last(protein)
+    n = [(Cterm, 1)]
+    if last_aa == AA_D
+        charged_counts[last_aa] -= 1
+        n = push!(n, (4.55, 1))
+    elseif last_aa == AA_D
+        charged_counts[last_aa] -= 1
+        n = push!(n, (4.75, 1))
+    end
     p = push!(map(a -> (pKa[a], charged_counts[a]), [AA_K, AA_R, AA_H]), (Nterm, 1))
-    n = push!(map(a -> (pKa[a], charged_counts[a]), [AA_D, AA_E, AA_C, AA_Y]), (Cterm, 1))
+    n = push!(n, map(a -> (pKa[a], charged_counts[a]), [AA_D, AA_E, AA_C, AA_Y])...)
     charge_func = pH -> begin
         CRp = [c/(1.0 + 10^(pH - pK)) for (pK, c) in p]
         CRn = [c/(1.0 + 10^(pK - pH)) for (pK, c) in n]
