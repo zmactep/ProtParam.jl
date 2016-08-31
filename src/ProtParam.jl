@@ -106,7 +106,7 @@ function protparam(protein::AminoAcidSequence)
     data[PP_NEGATIVE] = negativecount(protein)
     data[PP_POSITIVE] = positivecount(protein)
 
-    data[PP_EXT_NO_C], data[PP_EXT] = extintion_coeff(protein)
+    data[PP_EXT_NO_C], data[PP_EXT] = extinction_coeff(protein)
     data[PP_ABS_NO_C], data[PP_ABS] = absorbance(protein)
 
     hl = half_life(protein, false)

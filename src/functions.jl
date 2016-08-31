@@ -92,11 +92,11 @@ function gravy(protein::AminoAcidSequence)
 end
 
 """
-Pair of extintion coefficients:
+Pair of extinction coefficients:
 1. assuming all Cys residues are reduced
 1. assuming all pairs of Cys residues form cystines
 """
-function extintion_coeff(protein::AminoAcidSequence)
+function extinction_coeff(protein::AminoAcidSequence)
     ext_y = 1490
     ext_w = 5500
     ext_c = 125
@@ -120,7 +120,7 @@ Absorbance 0.1% (=1 g/l)
 """
 function absorbance(protein::AminoAcidSequence)
     mw = molecular_weight(protein)
-    map(x -> x / mw, extintion_coeff(protein))
+    map(x -> x / mw, extinction_coeff(protein))
 end
 
 "Atoms composition"
