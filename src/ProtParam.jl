@@ -90,7 +90,7 @@ function Base.show(io::IO, pph::ProtParamHolder)
     end
 end
 
-"Construction of protein parametes type"
+"Construction of protein parameters type"
 function protparam(protein::AminoAcidSequence)
     data = Dict{ProtParamType, Any}()
 
@@ -101,7 +101,7 @@ function protparam(protein::AminoAcidSequence)
     data[PP_TOT_AA] = length(protein)
     data[PP_TOT_ATOMS] = number_of_atoms(protein)
 
-    data[PP_PI] = 0
+    data[PP_PI] = isoelectric_point(protein)
 
     data[PP_NEGATIVE] = negativecount(protein)
     data[PP_POSITIVE] = positivecount(protein)
