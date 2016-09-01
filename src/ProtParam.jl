@@ -7,6 +7,7 @@ import Bio.Seq: AminoAcidSequence, composition,
                 AA_M, AA_N, AA_P, AA_Q, AA_R,
                 AA_S, AA_T, AA_V, AA_W, AA_Y,
                 @aa_str
+import Bio.Windows: eachwindow
 
 export Atom,
        ATOM_C, ATOM_H, ATOM_O, ATOM_N, ATOM_S,
@@ -25,6 +26,7 @@ include("atom.jl")
 include("proteinparam.jl")
 include("moleculeparam.jl")
 include("acidparam.jl")
+include("dipeptideparam.jl")
 include("functions.jl")
 
 """
@@ -88,7 +90,7 @@ function Base.show(io::IO, pph::ProtParamHolder)
     end
 end
 
-"Construction of protein parametes type"
+"Construction of protein parameters type"
 function protparam(protein::AminoAcidSequence)
     data = Dict{ProtParamType, Any}()
 
@@ -99,12 +101,12 @@ function protparam(protein::AminoAcidSequence)
     data[PP_TOT_AA] = length(protein)
     data[PP_TOT_ATOMS] = number_of_atoms(protein)
 
-    data[PP_PI] = 0
+    data[PP_PI] = isoelectric_point(protein)
 
     data[PP_NEGATIVE] = negativecount(protein)
     data[PP_POSITIVE] = positivecount(protein)
 
-    data[PP_EXT_NO_C], data[PP_EXT] = extintion_coeff(protein)
+    data[PP_EXT_NO_C], data[PP_EXT] = extinction_coeff(protein)
     data[PP_ABS_NO_C], data[PP_ABS] = absorbance(protein)
 
     hl = half_life(protein, false)

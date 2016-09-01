@@ -31,10 +31,10 @@ ProtParam
        	Total number of negatively charged residues (Asp + Glu):       	7
        	Total number of positively charged residues (Arg + Lys):       	10
 
-       	Extintion coefficient, assuming all pairs of Cys residues form cystines:
+       	Extinction coefficient, assuming all pairs of Cys residues form cystines:
        		E:     	37025
        		Abs:   	2.8514894672248112
-       	Extintion coefficient, assuming all Cys residues are reduced:
+       	Extinction coefficient, assuming all Cys residues are reduced:
        		E:     	36900
        		Abs:   	2.841862561528576
 

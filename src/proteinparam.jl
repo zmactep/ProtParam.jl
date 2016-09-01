@@ -25,9 +25,9 @@ prot_params = [
     ("NEGATIVE",  "Total number of negatively charged residues (Asp + Glu)",                    0x06),
     ("POSITIVE",  "Total number of positively charged residues (Arg + Lys)",                    0x07),
 
-    ("EXT",       "Extintion coefficient, assuming all pairs of Cys residues form cystines",    0x08),
+    ("EXT",       "Extinction coefficient, assuming all pairs of Cys residues form cystines",    0x08),
     ("ABS",       "Absorbance 0.1% (=1 g/l), assuming all pairs of Cys residues form cystines", 0x09),
-    ("EXT_NO_C",  "Extintion coefficient, assuming all Cys residues are reduced",               0x0a),
+    ("EXT_NO_C",  "Extinction coefficient, assuming all Cys residues are reduced",               0x0a),
     ("ABS_NO_C",  "Absorbance 0.1% (=1 g/l), assuming all Cys residues are reduced",            0x0b),
 
     ("HL_MAM",    "Estimated half-life in mammalian reticulocytes, in vitro",                   0x0c),
