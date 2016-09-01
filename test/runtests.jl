@@ -1,17 +1,6 @@
 using ProtParam
 using Base.Test, FactCheck
 
-rituximab = aa"QVQLQQPGAELVKPGASVKMSCKASGYTFTSYNMHWVKQTPGRGLEWIGAYPGNGDTSYNQKFKGKATLTADKSSSTAYMQLSSLTSEDSAVYYCARSTYYGGDWYFNVWAGTTVTVSA"
-PCNA = aa"MFEARLVQGSILKKVLEALKDLINEACWDISSSGVNLQSMDSSHVSLVQLTLRSEGFDTYRCDRNLAMGVNLTSMSKILKCAGNEDIITLRAEDNADTLALVFEAPNQEKVSDYEMKLMDLDVEQLGIPEQEYSCVVKMPSGEFARICRDLSHIGDAVVISCAKDGVKFSASGELGNGNIKLSQTSNVDKEEEAVTIEMNEPVQLTFALRYLNFFTKATPLSSTVTLSMSADVPLVVEYKIADMGHLKYYLAPKIEDEEGS" 
-
-import ProtParam: isoelectric_point
-# compute theoretical pI for several sequences and compare with Compute pI/Mw output
-for (protein, expected_result) in [
-    (aa"RCDRNLAMGVNLTSMSKILK", 10.05),
-    (rituximab, 8.86),
-    (PCNA, 4.57)
-]
-    @test_approx_eq_eps expected_result isoelectric_point(protein) 0.01
-end
-
+include("functions_tests.jl")
+#add acidparam_tests.jl - to check if aminoacid params are saved in constructor
 FactCheck.exitstatus()
