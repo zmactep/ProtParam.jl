@@ -106,13 +106,13 @@ test_data = [
     )
 ]
 
-aa1 = test_data[1][2]
-println(atom_composition(aa1))
-#println(show(half_life(aa1)))
+# Following code cycles through examples given in test_data array, for each of 
+# them compares values of functions (each function given as a key in Dict) with
+# corresponding expected values (which were taken from ExPASy output).
 for (name, sequence, data) in test_data
     facts(string("Run tests for ", name)) do
         for (function_name, expected_result) in data
-            result = eval(Expr(:call, symbol(function_name), sequence))
+            result = eval(Expr(:call, Symbol(function_name), sequence))
             if isa(result, Number)
                 @fact result --> roughly(expected_result, 0.01)
             elseif isa(result, Tuple)
