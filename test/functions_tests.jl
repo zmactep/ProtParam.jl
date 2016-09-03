@@ -1,137 +1,89 @@
 # This test set ensures that methods from `src/functions.jl` behave the same way as they should
 # This is checked by comparing results of particular methods with corresponding output from ExPASy.
-import ProtParam: *
-rituximab = aa"QVQLQQPGAELVKPGASVKMSCKASGYTFTSYNMHWVKQTPGRGLEWIGAYPGNGDTSYNQKFKGKATLTADKSSSTAYMQLSSLTSEDSAVYYCARSTYYGGDWYFNVWAGTTVTVSA"
-PCNA = aa"MFEARLVQGSILKKVLEALKDLINEACWDISSSGVNLQSMDSSHVSLVQLTLRSEGFDTYRCDRNLAMGVNLTSMSKILKCAGNEDIITLRAEDNADTLALVFEAPNQEKVSDYEMKLMDLDVEQLGIPEQEYSCVVKMPSGEFARICRDLSHIGDAVVISCAKDGVKFSASGELGNGNIKLSQTSNVDKEEEAVTIEMNEPVQLTFALRYLNFFTKATPLSSTVTLSMSADVPLVVEYKIADMGHLKYYLAPKIEDEEGS" 
+import ProtParam: 
+    negativecount,
+    positivecount,
+    half_life,
+    instability_index,
+    stability,
+    isoelectric_point, 
+    gravy,
+    extinction_coeff,
+    molecular_weight,
+    absorbance,
+    atom_composition,
+    number_of_atoms,
+    aliphatic_index
 
-facts("negativecount computation") do
-    for (protein, expected_result) in [
-        (aa"RCDRNLAMGVNLTSMSKILK", 10.05),
-        (rituximab, 8.86),
-        (PCNA, 4.57)
-    ]
-        @fact negativecount(protein) --> roughly(expected_result, 0.01)
-    end
-end
+test_data = [
+    (
+        "rituximab",
+        aa"QVQLQQPGAELVKPGASVKMSCKASGYTFTSYNMHWVKQTPGRGLEWIGAYPGNGDTSYNQKFKGKATLTADKSSSTAYMQLSSLTSEDSAVYYCARSTYYGGDWYFNVWAGTTVTVSA",
+        Dict(
+            "negativecount" => 7,
+            "positivecount" => 10,
+            #"half_life" => ,
+            "instability_index" => 32.99,
+            "stability" => "stable",
+            "isoelectric_point" => 8.86,
+            "gravy" => -0.454,
+            #"extinction_coeff" => 
+            "molecular_weight" => 12984.44,
+            #"absorbance" =>
+            #"atom_composition" =>
+            "number_of_atoms" => 1781,
+            "aliphatic_index" => 51.68
+        )
+    ), 
+    (   
+        "PCNA",
+        aa"MFEARLVQGSILKKVLEALKDLINEACWDISSSGVNLQSMDSSHVSLVQLTLRSEGFDTYRCDRNLAMGVNLTSMSKILKCAGNEDIITLRAEDNADTLALVFEAPNQEKVSDYEMKLMDLDVEQLGIPEQEYSCVVKMPSGEFARICRDLSHIGDAVVISCAKDGVKFSASGELGNGNIKLSQTSNVDKEEEAVTIEMNEPVQLTFALRYLNFFTKATPLSSTVTLSMSADVPLVVEYKIADMGHLKYYLAPKIEDEEGS",
+        Dict(
+            "negativecount" => 41,
+            "positivecount" => 24,
+            #"half_life" => 
+            "instability_index" => 45.15,
+            "stability" => "unstable",
+            "isoelectric_point" => 4.57,
+            "gravy" => -0.095,
+            #"extinction_coeff" => 
+            "molecular_weight" => 28768.78,
+            #"absorbance" =>
+            #"atom_composition" =>
+            "number_of_atoms" => 4029,
+            "aliphatic_index" => 94.87
+        )
+    ),
+    (
+        "PCNA fragment",
+        aa"RCDRNLAMGVNLTSMSKILK",
+        Dict(
+            "negativecount" => 1,
+            "positivecount" => 4,
+            #"half_life" => 
+            "instability_index" => 44.64,
+            "stability" => "unstable",
+            "isoelectric_point" => 10.05,
+            "gravy" => -0.090,
+            #"extinction_coeff" => 
+            "molecular_weight" => 2250.72,
+            #"absorbance" =>
+            #"atom_composition" =>
+            "number_of_atoms" => 322,
+            "aliphatic_index" => 97.50
+        )
+    )
+]
 
-facts("positivecount computation") do
-    for (protein, expected_result) in [
-        (aa"RCDRNLAMGVNLTSMSKILK", 10.05),
-        (rituximab, 8.86),
-        (PCNA, 4.57)
-    ]
-        @fact positivecount(protein) --> roughly(expected_result, 0.01)
-    end
-end
-
-facts("half_life computation") do
-    for (protein, expected_result) in [
-        (aa"RCDRNLAMGVNLTSMSKILK", 10.05),
-        (rituximab, 8.86),
-        (PCNA, 4.57)
-    ]
-        @fact half_life(protein) --> roughly(expected_result, 0.01)
-        @pending half_life(protein, false)
-    end
-end
-
-facts("instability_index computation") do
-    for (protein, expected_result) in [
-        (aa"RCDRNLAMGVNLTSMSKILK", 10.05),
-        (rituximab, 8.86),
-        (PCNA, 4.57)
-    ]
-        @fact instability_index(protein) --> roughly(expected_result, 0.01)
-    end
-end
-
-facts("stability computation") do
-    for (protein, expected_result) in [
-        (aa"RCDRNLAMGVNLTSMSKILK", 10.05),
-        (rituximab, 8.86),
-        (PCNA, 4.57)
-    ]
-        @fact stability(protein) --> roughly(expected_result, 0.01)
-    end
-end
-
-# compute theoretical pI for several sequences and compare with Compute pI/Mw output
-facts("isoelectric_point computation") do
-    for (protein, expected_result) in [
-        (aa"RCDRNLAMGVNLTSMSKILK", 10.05),
-        (rituximab, 8.86),
-        (PCNA, 4.57)
-    ]
-        @fact isoelectric_point(protein) --> roughly(expected_result, 0.01)
-    end
-end
-
-facts("gravy computation") do
-    for (protein, expected_result) in [
-        (aa"RCDRNLAMGVNLTSMSKILK", 10.05),
-        (rituximab, 8.86),
-        (PCNA, 4.57)
-    ]
-        @fact gravy(protein) --> roughly(expected_result, 0.01)
-    end
-end
-
-facts("extinction_coeff computation") do
-    for (protein, expected_result) in [
-        (aa"RCDRNLAMGVNLTSMSKILK", 10.05),
-        (rituximab, 8.86),
-        (PCNA, 4.57)
-    ]
-        @fact extinction_coeff(protein) --> roughly(expected_result, 0.01)
-    end
-end
-
-facts("molecular_weight computation") do
-    for (protein, expected_result) in [
-        (aa"RCDRNLAMGVNLTSMSKILK", 10.05),
-        (rituximab, 8.86),
-        (PCNA, 4.57)
-    ]
-        @fact molecular_weight(protein) --> roughly(expected_result, 0.01)
-    end
-end
-
-facts("absorbance computation") do
-    for (protein, expected_result) in [
-        (aa"RCDRNLAMGVNLTSMSKILK", 10.05),
-        (rituximab, 8.86),
-        (PCNA, 4.57)
-    ]
-        @fact absorbance(protein) --> roughly(expected_result, 0.01)
-    end
-end
-
-facts("atom_composition computation") do
-    for (protein, expected_result) in [
-        (aa"RCDRNLAMGVNLTSMSKILK", 10.05),
-        (rituximab, 8.86),
-        (PCNA, 4.57)
-    ]
-        @fact atom_composition(protein) --> roughly(expected_result, 0.01)
-    end
-end
-
-facts("number_of_atoms computation") do
-    for (protein, expected_result) in [
-        (aa"RCDRNLAMGVNLTSMSKILK", 10.05),
-        (rituximab, 8.86),
-        (PCNA, 4.57)
-    ]
-        @fact number_of_atoms(protein) --> roughly(expected_result, 0.01)
-    end
-end
-
-facts("aliphatic_index computation") do
-    for (protein, expected_result) in [
-        (aa"RCDRNLAMGVNLTSMSKILK", 10.05),
-        (rituximab, 8.86),
-        (PCNA, 4.57)
-    ]
-        @fact aliphatic_index(protein) --> roughly(expected_result, 0.01)
+for (name, sequence, data) in test_data
+    facts(string("Run tests for ", name)) do
+        for (function_name, expected_result) in data
+            result = eval(Expr(:call, symbol(function_name), sequence))
+            if isa(result, Number)
+                @fact result --> roughly(expected_result, 0.01)
+            else
+                @fact result --> expected_result
+            end
+        end
     end
 end
