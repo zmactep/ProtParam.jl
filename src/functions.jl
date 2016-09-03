@@ -21,7 +21,7 @@ function half_life(protein::AminoAcidSequence, make_string::Bool=true)
     if !make_string
         result
     else
-        Dict{ASCIIString, Int}(map(x -> names[x[0]] => x[1], result))
+        Dict{ASCIIString, Int}(map(x -> names[x[1]] => x[2], result))
     end
 end
 
