@@ -13,7 +13,7 @@ end
 "Estimated half-life in mammalian, yeast and E. Coli"
 function half_life(protein::AminoAcidSequence, make_string::Bool=true)
     result = AA_PARAMS[first(protein)].half_life
-    names = Dict{ProtParamType, ASCIIString}(
+    names = Dict{ProtParamType, String}(
       PP_HL_MAM => "Mammalian, in vitro",
       PP_HL_YEAST => "Yeast, in vivo",
       PP_HL_ECOLI => "E.Coli, in vivo"
@@ -21,7 +21,7 @@ function half_life(protein::AminoAcidSequence, make_string::Bool=true)
     if !make_string
         result
     else
-        Dict{ASCIIString, ASCIIString}(map(x -> names[x[1]] => x[2], result))
+        Dict{String, String}(map(x -> names[x[1]] => x[2], result))
     end
 end
 
@@ -39,16 +39,16 @@ end
 function isoelectric_point(protein::AminoAcidSequence, epsilon = 0.01)
     #these are constant pKa values
     pKa = Dict(
-      AA_K => 10, 
-      AA_R => 12, 
-      AA_H => 5.98, 
-      AA_D => 4.05, 
-      AA_E => 4.45, 
-      AA_C => 9, 
+      AA_K => 10,
+      AA_R => 12,
+      AA_H => 5.98,
+      AA_D => 4.05,
+      AA_E => 4.45,
+      AA_C => 9,
       AA_Y => 10.0
     )
     Nterm = get(Dict(
-          AA_A => 7.59, 
+          AA_A => 7.59,
           AA_M => 7.0,
           AA_S => 6.93,
           AA_P => 8.36,
@@ -58,7 +58,7 @@ function isoelectric_point(protein::AminoAcidSequence, epsilon = 0.01)
           ), first(protein), 7.5)
     Cterm = 3.55
     #"the calling function"
-    charged_counts = [a => count(x -> x==a, protein) for a in aa"KRHDECY"]
+    charged_counts = Dict(a => count(x -> x==a, protein) for a in aa"KRHDECY")
     last_aa = last(protein)
     n = [(Cterm, 1)]
     if last_aa == AA_D

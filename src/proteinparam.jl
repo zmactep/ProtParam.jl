@@ -46,11 +46,11 @@ prot_params = [
 prot_params_prefix = "PP_";
 
 "Array of `ProtParamType`s representation symbol, `ProtParamType` code is a position in array"
-pp_to_str = Vector{ASCIIString}(0xff)
+pp_to_str = Vector{String}(0xff)
 
 #Create all `ProtParamType` symbols and fill their representation array
 for (sym, doc, code) in prot_params
-    ss = symbol(prot_params_prefix, sym)
+    ss = Symbol(prot_params_prefix, sym)
     @eval begin
         @doc $doc const $ss = convert(ProtParamType, $code)
         pp_to_str[$code + 1] = $sym
@@ -58,7 +58,7 @@ for (sym, doc, code) in prot_params
 end
 
 # ProtParamType looks like 'PP_<symbol>' in ASCIIString
-Base.convert(::Type{ASCIIString}, pp::ProtParamType) = prot_params_prefix * pp_to_str[convert(UInt8, pp) + 1]
+Base.convert(::Type{String}, pp::ProtParamType) = prot_params_prefix * pp_to_str[convert(UInt8, pp) + 1]
 
 # ProtParamType prints as 'PP_<symbol>' in console
 Base.show(io::IO, pp::ProtParamType) = write(io, convert(ASCIIString, pp));

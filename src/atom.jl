@@ -24,11 +24,11 @@ atoms = [
 atoms_prefix = "ATOM_";
 
 "Array of `Atom`s representation symbol, `Atom` code is a position in array"
-atom_to_str = Vector{ASCIIString}(0xff)
+atom_to_str = Vector{String}(0xff)
 
 #Create all `Atom` symbols and fill their representation array
 for (sym, doc, code) in atoms
-    ss = symbol(atoms_prefix, sym)
+    ss = Symbol(atoms_prefix, sym)
     @eval begin
         @doc $doc const $ss = convert(Atom, $code)
         atom_to_str[$code + 1] = $sym
@@ -36,7 +36,7 @@ for (sym, doc, code) in atoms
 end
 
 # Atom looks like it's symbol in ASCIIString
-Base.convert(::Type{ASCIIString}, atom::Atom) = atom_to_str[convert(UInt8, atom) + 1]
+Base.convert(::Type{String}, atom::Atom) = atom_to_str[convert(UInt8, atom) + 1]
 
 # Atom prints as 'ATOM_<symbol>' in console
-Base.show(io::IO, atom::Atom) = write(io, atoms_prefix * convert(ASCIIString, atom));
+Base.show(io::IO, atom::Atom) = write(io, atoms_prefix * convert(String, atom));

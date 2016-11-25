@@ -20,17 +20,17 @@ AminoAcidParam(hl_mam, hl_yeast, hl_ecoli,
 1. `pI`   — pH at which a amino acid carries no net electrical charge
 """
 type AminoAcidParam
-    half_life::Dict{ProtParamType, ASCIIString}
+    half_life::Dict{ProtParamType, String}
     hydropathicity::Float64
     pKaC::Float64
     pKaN::Float64
     pKaR::Float64
     pI::Float64
 
-    function AminoAcidParam(hl_mam::ASCIIString, hl_yeast::ASCIIString, hl_ecoli::ASCIIString,
+    function AminoAcidParam(hl_mam::String, hl_yeast::String, hl_ecoli::String,
                             hydropathicity::Float64, pKaC::Float64, pKaN::Float64, pKaR::Float64, pI::Float64)
         self = new()
-        self.half_life = Dict{ProtParamType, ASCIIString}()
+        self.half_life = Dict{ProtParamType, String}()
         self.half_life[PP_HL_MAM] = hl_mam
         self.half_life[PP_HL_YEAST] = hl_yeast
         self.half_life[PP_HL_ECOLI] = hl_ecoli
