@@ -39,7 +39,7 @@ type ProtParamHolder
 end
 
 macro showdoc(x)
-    :(first(first(@doc($x).content).content))
+    :(first(first(first(@doc($x).content).content).content))
 end
 
 function Base.show(io::IO, pph::ProtParamHolder)
@@ -86,7 +86,7 @@ function Base.show(io::IO, pph::ProtParamHolder)
     write(io, "\n")
     write(io, "\t$(@showdoc(PP_ATOM_COMP)):\n")
     for (atom, count) in pph.data[PP_ATOM_COMP]
-        write(io, "\t\t$(convert(ASCIIString, atom))\t$(count)\n")
+        write(io, "\t\t$(convert(String, atom))\t$(count)\n")
     end
 end
 

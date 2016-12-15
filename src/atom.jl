@@ -35,7 +35,7 @@ for (sym, doc, code) in atoms
     end
 end
 
-# Atom looks like it's symbol in ASCIIString
+# Atom looks like it's symbol in String
 Base.convert(::Type{String}, atom::Atom) = atom_to_str[convert(UInt8, atom) + 1]
 
 # Atom prints as 'ATOM_<symbol>' in console

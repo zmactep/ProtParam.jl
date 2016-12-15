@@ -57,8 +57,8 @@ for (sym, doc, code) in prot_params
     end
 end
 
-# ProtParamType looks like 'PP_<symbol>' in ASCIIString
+# ProtParamType looks like 'PP_<symbol>' in String
 Base.convert(::Type{String}, pp::ProtParamType) = prot_params_prefix * pp_to_str[convert(UInt8, pp) + 1]
 
 # ProtParamType prints as 'PP_<symbol>' in console
-Base.show(io::IO, pp::ProtParamType) = write(io, convert(ASCIIString, pp));
+Base.show(io::IO, pp::ProtParamType) = write(io, convert(String, pp));
