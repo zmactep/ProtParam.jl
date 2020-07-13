@@ -21,14 +21,14 @@ function half_life(protein::AminoAcidSequence, make_string::Bool=true)
     if !make_string
         result
     else
-        Dict{String, String}(map(x -> names[x[1]] => x[2], result))
+        Dict{String, String}(map(x -> names[x[1]] => x[2], collect(result)))
     end
 end
 
 "The instability index (II) of protein"
 function instability_index(protein::AminoAcidSequence)
     instability = sum(DIWV((@view protein[i:i + 1])...) for i in 1:length(protein) - 1)
-    10.0 / length(protein) * instability
+    round(10.0 / length(protein) * instability, digits = 2)
 end
 
 "Stability class by II"
@@ -84,12 +84,12 @@ function isoelectric_point(protein::AminoAcidSequence, epsilon = 0.01)
         last_charge = charge_func(current_pH)
         current_step = current_step/2.0
     end
-    current_pH
+    round(current_pH, digits = 2)
 end
 
 "Grand Average of Hydropathy (GRAVY)"
 function gravy(protein::AminoAcidSequence)
-    mean([AA_PARAMS[aa].hydropathicity for aa in protein])
+    round(mean([AA_PARAMS[aa].hydropathicity for aa in protein]), digits = 3)
 end
 
 """
@@ -111,7 +111,7 @@ end
 "Molecular weight of protein"
 function molecular_weight(protein::AminoAcidSequence)
     aims = [AA_MOL_PARAMS[aa].avg_isotopic_mass for aa in protein]
-    isempty(aims) ? 0 : sum(aims) + WATER_MOL_PARAMS.avg_isotopic_mass
+    round(isempty(aims) ? 0 : sum(aims) + WATER_MOL_PARAMS.avg_isotopic_mass, digits = 2)
 end
 
 """
@@ -121,7 +121,7 @@ Absorbance 0.1% (=1 g/l)
 """
 function absorbance(protein::AminoAcidSequence)
     mw = molecular_weight(protein)
-    map(x -> x / mw, extinction_coeff(protein))
+    map(x -> round(x / mw, digits = 3), extinction_coeff(protein))
 end
 
 "Atoms composition"
@@ -149,5 +149,5 @@ function aliphatic_index(protein::AminoAcidSequence)
 
     len = length(protein)
     comp = composition(protein)
-    100 * (comp[AA_A] / len + a * comp[AA_V] / len + b * (comp[AA_I] + comp[AA_L]) / len)
+    round(100 * (comp[AA_A] / len + a * comp[AA_V] / len + b * (comp[AA_I] + comp[AA_L]) / len), digits = 2)
 end
