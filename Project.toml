@@ -1,0 +1,8 @@
+name = "ProtParam"
+uuid = "5bb0df6b-b069-4990-a376-8015e87baf9e"
+authors = ["Pavel Yakovlev <pavel@yakovlev.me>"]
+version = "0.1.0"
+
+[deps]
+BioSequences = "7e6ae17a-c86d-528c-b3b9-7f778a29fe59"
+Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"

@@ -1,5 +1,5 @@
 "Type representing protein parameters"
-bitstype 8 ProtParamType
+primitive type ProtParamType <: Number 8 end
 
 # UInt8 to ProtParamType and back conversions
 Base.convert(::Type{ProtParamType}, param::UInt8) = reinterpret(ProtParamType, param);
@@ -46,7 +46,7 @@ prot_params = [
 prot_params_prefix = "PP_";
 
 "Array of `ProtParamType`s representation symbol, `ProtParamType` code is a position in array"
-pp_to_str = Vector{String}(0xff)
+pp_to_str = Vector{String}(undef, 0xff)
 
 #Create all `ProtParamType` symbols and fill their representation array
 for (sym, doc, code) in prot_params

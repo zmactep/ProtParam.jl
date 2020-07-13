@@ -16,23 +16,19 @@ MoleculeParam(carbon, hydrogen, nitrogen, oxygen, sulfur,
 1. `monoisotopic_mass` — monoisotopic mass of molecule
 1. `avg_isotopic_mass` — average isotopic mass of molecule
 """
-type MoleculeParam
+struct MoleculeParam
     composition::Dict{Atom, Int}
     monoisotopic_mass::Float64
     avg_isotopic_mass::Float64
 
     function MoleculeParam(carbon::Int, hydrogen::Int, nitrogen::Int, oxygen::Int, sulfur::Int,
                            monoisotopic_mass::Float64, avg_isotopic_mass::Float64)
-        self = new()
-        self.composition = Dict{Atom, Int}()
-        self.composition[ATOM_C] = carbon
-        self.composition[ATOM_H] = hydrogen
-        self.composition[ATOM_N] = nitrogen
-        self.composition[ATOM_O] = oxygen
-        self.composition[ATOM_S] = sulfur
-        self.monoisotopic_mass = monoisotopic_mass
-        self.avg_isotopic_mass = avg_isotopic_mass
-        self
+        new(Dict{Atom, Int}(ATOM_C => carbon,
+                            ATOM_H => hydrogen,
+                            ATOM_N => nitrogen,
+                            ATOM_O => oxygen,
+                            ATOM_S => sulfur),
+            monoisotopic_mass, avg_isotopic_mass)
     end
 end
 

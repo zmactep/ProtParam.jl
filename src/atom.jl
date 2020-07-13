@@ -1,5 +1,5 @@
 "Type representing atoms"
-bitstype 8 Atom
+primitive type Atom <: Number 8 end
 
 # UInt8 to Atom and back conversions
 Base.convert(::Type{Atom}, atom::UInt8) = reinterpret(Atom, atom);
@@ -24,7 +24,7 @@ atoms = [
 atoms_prefix = "ATOM_";
 
 "Array of `Atom`s representation symbol, `Atom` code is a position in array"
-atom_to_str = Vector{String}(0xff)
+atom_to_str = Vector{String}(undef, 0xff)
 
 #Create all `Atom` symbols and fill their representation array
 for (sym, doc, code) in atoms

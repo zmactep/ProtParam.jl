@@ -1,13 +1,13 @@
 module ProtParam
 
-import Bio.Seq: AminoAcidSequence, composition,
-                AminoAcid,
-                AA_A, AA_C, AA_D, AA_E, AA_F,
-                AA_G, AA_H, AA_I, AA_K, AA_L,
-                AA_M, AA_N, AA_P, AA_Q, AA_R,
-                AA_S, AA_T, AA_V, AA_W, AA_Y,
-                @aa_str
-import Bio.Windows: eachwindow
+import Statistics:   mean
+import BioSequences: LongSequence, composition,
+                     AminoAcidAlphabet, AminoAcid,
+                     AA_A, AA_C, AA_D, AA_E, AA_F,
+                     AA_G, AA_H, AA_I, AA_K, AA_L,
+                     AA_M, AA_N, AA_P, AA_Q, AA_R,
+                     AA_S, AA_T, AA_V, AA_W, AA_Y,
+                     @aa_str
 
 export Atom,
        ATOM_C, ATOM_H, ATOM_O, ATOM_N, ATOM_S,
@@ -19,8 +19,9 @@ export Atom,
        PP_HL_MAM, PP_HL_YEAST, PP_HL_ECOLI,
        PP_II, PP_II_CLASS,
        PP_ALIPH, PP_GRAVY,
-       PP_SEQUENCE,
-       @aa_str
+       PP_SEQUENCE
+
+AminoAcidSequence = LongSequence{AminoAcidAlphabet}
 
 include("atom.jl")
 include("proteinparam.jl")
@@ -34,7 +35,7 @@ include("functions.jl")
 
 Holds a mapping from `ProtParamType`s to the values for the protein
 """
-type ProtParamHolder
+struct ProtParamHolder
     data::Dict{ProtParamType, Any}
 end
 

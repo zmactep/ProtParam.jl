@@ -27,7 +27,8 @@ end
 
 "The instability index (II) of protein"
 function instability_index(protein::AminoAcidSequence)
-    10.0/length(protein)*sum([DIWV(aminoacids...) for (_, aminoacids) in eachwindow(protein, 2)])
+    instability = sum(DIWV((@view protein[i:i + 1])...) for i in 1:length(protein) - 1)
+    10.0 / length(protein) * instability
 end
 
 "Stability class by II"
