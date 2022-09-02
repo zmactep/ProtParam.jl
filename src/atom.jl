@@ -14,7 +14,7 @@ Base.convert(::Type{UInt8}, atom::Atom) = reinterpret(UInt8, atom);
 """
 atoms = [
     ("C",  "Carbon",   0x00),
-    ("O",  "Oxigen",   0x01),
+    ("O",  "Oxygen",   0x01),
     ("H",  "Hydrogen", 0x02),
     ("N",  "Nitrogen", 0x03),
     ("S",  "Sulfur",   0x04),
